@@ -6,6 +6,10 @@
 	body {
 		background-color:black;
 	}
+	svg {
+		width: 1000px;
+		height: 1000px;
+	}
 	</style>
 </head>
 <body>
@@ -33,7 +37,8 @@
 	function createCircle(cx,cy,r)
 	{
 		var circle = makeSVG('circle', 
-			{ cx: cx,
+			{ 
+			  cx: cx,
 			  cy: cy,
 			  r:  r,
 			  id: 'circle_'+counter,
@@ -45,7 +50,8 @@
 
 		counter++;
 		document.getElementById('svg').appendChild(circle);
-	}
+	};
+
 
 	//go through all the circles and update its radius and background color
 	function updateCircles()
@@ -54,11 +60,17 @@
 		{
 			var el = document.getElementById(circle);
 			var color = 255-parseInt(circles[circle].radius/80*255);
+			var color1 = Math.floor((Math.random()*255) + 1);
+			var color2 = Math.floor((Math.random()*255) + 1 );
+			var color3 = Math.floor((Math.random()*255) + 1);
+
+
+
 			circles[circle].radius = circles[circle].radius+1;
 
 			//update the radius and the background color
 			el.setAttribute("r", circles[circle].radius);
-			el.setAttribute("style", "fill: rgb("+color+","+color+","+color+"); ");
+			el.setAttribute("style", "fill: rgb("+color1+","+color2+","+color3+"); ");
 
 			//if the circle radius is greater than 80, remove the dom and remove its value in the circles variable/object
 			if(circles[circle].radius > 80)
@@ -73,14 +85,31 @@
 	function mainLoop()
     {
     	//create a new circle of radius 15 every time the loop is run
-    	createCircle(Math.random()*document.body.clientWidth, Math.random()*document.body.clientHeight, 15);
+    	createCircle(Math.random()*document.body.clientWidth, Math.random()*document.body.clientHeight, 1);
     	
     	//update the circle size and background color
     	updateCircles();	
     }
 	
 	//execute the mainLoop funtion every 30 milliseconds
-	setInterval(mainLoop, 30);
+	
+
+	document.onclick = function sideLoop()
+    {
+
+    	//create a new circle of radius 15 every time the loop is run
+    	createCircle(1*event.clientX, 1*event.clientY, 40);
+    	// createCircle(Math.random()*document.body.clientWidth, Math.random()*document.body.clientHeight, 40);
+
+    	
+    	//update the circle size and background color
+    	updateCircles();
+    	console.log('hi');	
+    }
+
+    setInterval(mainLoop, 100);
+
+	
 
 	</script>
 
